@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+Licensee: Universidad de La Frontera
+License Type: Academic
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="orm.Actividad_leida" table="actividad_leida" lazy="false">
+		<id name="uid" column="uid" type="integer" unsaved-value="0">
+			<generator class="native">
+			</generator>
+		</id>
+		<property name="visto" column="visto" type="string" length="255" not-null="true" lazy="false"/>
+		<many-to-one name="contacto" cascade="lock" column="contacto_id" class="orm.Contacto" not-null="true" lazy="no-proxy" access="field">
+		</many-to-one>
+		<many-to-one name="actividad" cascade="lock" column="actividad_id" class="orm.Actividad" not-null="true" lazy="no-proxy" access="field">
+		</many-to-one>
+	</class>
+</hibernate-mapping>

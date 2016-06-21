@@ -1,0 +1,107 @@
+<?xml version="1.0"?>
+<!--
+Licensee: Universidad de La Frontera
+License Type: Academic
+-->
+<project name="AdministracionContactos" default="instrument">
+	<description>
+		AdministracionContactos
+	</description>
+
+	<property name="src.dir" location="src" />
+	<property name="lib.dir" location="lib" />
+	<property name="classes.dir" location="classes" />
+	<property name="javac.debug" value="on" />
+
+	<target name="compile" description="Compile AdministracionContactos">
+		<mkdir dir="${classes.dir}" />
+		<javac srcdir="${src.dir}" destdir="${classes.dir}" debug="${javac.debug}">
+			<classpath>
+				<fileset dir="${lib.dir}" includes="*.jar"/>
+			</classpath>
+		</javac>
+		<copy todir="${classes.dir}">
+			<fileset dir="${src.dir}">
+				<exclude name="**/*.java" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="clean" description="Clean AdministracionContactos">
+		<delete dir="${classes.dir}" />
+	</target>
+
+	<target name="createSchema" description="Run create data schema sample">
+		<java classname="ormsamples.CreateAdministracionContactosDatabaseSchema" fork="true">
+			<classpath>
+				<fileset dir="${lib.dir}" includes="*.jar"/>
+				<pathelement location="${classes.dir}"/>
+			</classpath>
+		</java>
+	</target>
+
+	<target name="createdata" description="Run create test data sample">
+		<java classname="ormsamples.CreateAdministracionContactosData" fork="true">
+			<classpath>
+				<fileset dir="${lib.dir}" includes="*.jar"/>
+				<pathelement location="${classes.dir}"/>
+			</classpath>
+		</java>
+	</target>
+
+	<target name="retrievedata" description="Run retrieve data sample">
+		<java classname="ormsamples.RetrieveAndUpdateAdministracionContactosData" fork="true">
+			<classpath>
+				<fileset dir="${lib.dir}" includes="*.jar"/>
+				<pathelement location="${classes.dir}"/>
+			</classpath>
+		</java>
+	</target>
+
+	<target name="deletedata" description="Run delete data sample">
+		<java classname="ormsamples.DeleteAdministracionContactosData" fork="true">
+			<classpath>
+				<fileset dir="${lib.dir}" includes="*.jar"/>
+				<pathelement location="${classes.dir}"/>
+			</classpath>
+		</java>
+	</target>
+
+	<target name="dropschema" description="Run drop schema sample">
+		<java classname="ormsamples.DropAdministracionContactosDatabaseSchema" fork="true">
+			<classpath>
+				<fileset dir="${lib.dir}" includes="*.jar"/>
+				<pathelement location="${classes.dir}"/>
+			</classpath>
+		</java>
+	</target>
+
+	<target name="listdata" description="Run list data sample">
+		<java classname="ormsamples.ListAdministracionContactosData" fork="true">
+			<classpath>
+				<fileset dir="${lib.dir}" includes="*.jar"/>
+				<pathelement location="${classes.dir}"/>
+			</classpath>
+		</java>
+	</target>
+
+	<target name="instrument" depends="compile">
+		<taskdef name="instrument" classname="org.hibernate.tool.instrument.javassist.InstrumentTask">
+			<classpath>
+				<fileset dir="${lib.dir}" includes="*.jar"/>
+				<pathelement location="${classes.dir}"/>
+			</classpath>
+		</taskdef>
+		<instrument verbose="true">
+			<fileset dir="${classes.dir}">
+				<include name="orm\Contacto.class"/>
+				<include name="orm\Grupo.class"/>
+				<include name="orm\Membresia.class"/>
+				<include name="orm\Notificacion.class"/>
+				<include name="orm\Actividad.class"/>
+				<include name="orm\Notificacion_leida.class"/>
+				<include name="orm\Actividad_leida.class"/>
+			</fileset>
+		</instrument>
+	</target>
+</project>
